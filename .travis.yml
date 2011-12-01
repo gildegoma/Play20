@@ -1,6 +1,4 @@
-before_script: 
-  - "sh -c 'cd framework'"
-script: "./build test"
+script: "./run-travis.sh"
 branches:
   only:
     - add-travis-ci
