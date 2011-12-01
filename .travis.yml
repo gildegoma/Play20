@@ -1,4 +1,7 @@
-script: "cd framework && ./build test"
-
+before_script: ".travis/before_script.sh"
+script: "./build test"
+branches:
+  only:
+    - add-travis-ci
 notifications:
   email: false
