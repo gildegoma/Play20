@@ -1,0 +1,4 @@
+script: "cd framework && ./build test"
+
+notifications:
+  email: false
