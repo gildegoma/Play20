@@ -1,4 +1,4 @@
-script: "./run-travis.sh"
+script: ".travis/run.sh"
 branches:
   only:
     - add-travis-ci
