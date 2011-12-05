@@ -1,0 +1,8 @@
+language: scala
+script: ./framework/runtests
+notifications:
+  email: false
+#  irc:
+#    channels: "irc.freenode.org#playframework"
+#    on_success: change
+#    on_failure: always
