@@ -3,13 +3,22 @@ echo "[info] ---- PLAYFRAMEWORK CORE TEST RUNNER"
 echo "[info]"
 
 set -e
-export CURRENT=`pwd`
-export SCRIPT=`dirname $0`
+CURRENT=`pwd`
+FRAMEWORK_HOME=$CURRENT/`dirname $0`
+PLAY=$FRAMEWORK_HOME/../play
 
-cd $SCRIPT
-export PLAY=`pwd`/../play
+cd $FRAMEWORK_HOME
+
+echo "[info]"
+echo "[info] ---- SOME CLEAN UP FIRST"
+echo "[info]"
 
 ./cleanIvyCache
+
+echo "[info]"
+echo "[info] ---- BUILD FRAMEWORK" 
+echo "[info]"
+
 ./build "$@" publish-local
 
 echo "[info]"
@@ -20,32 +29,23 @@ echo "[info]"
 
 rm -rf ./logs
 
-cd ./test/integrationtest
-
 echo "[info]"
 echo "[info] ---- RUNNING INTEGRATION TEST"
 echo "[info]"
 
-$PLAY "$@" clean test
-cd $CURRENT
-
-cd ./test/integrationtest-java
+cd $FRAMEWORK_HOME/test/integrationtest && $PLAY "$@" clean test
 
 echo "[info]"
 echo "[info] ---- RUNNING JAVA INTEGRATION TEST"
 echo "[info]"
 
-$PLAY "$@" clean test
-cd $CURRENT
-
-cd ./test/integrationtest-scala
+cd $FRAMEWORK_HOME/test/integrationtest-java && $PLAY "$@" clean test
 
 echo "[info]"
 echo "[info] ---- RUNNING SCALA INTEGRATION TEST"
 echo "[info]"
 
-$PLAY "$@" clean test
-cd $CURRENT
+cd $FRAMEWORK_HOME/test/integrationtest-scala && $PLAY "$@" clean test
 
 echo "[info]"
 echo "[info] ---- TESTING SAMPLE APPLICATIONS"
@@ -55,99 +55,78 @@ echo "[info]"
 echo "[info] ---- TESTING JAVA/HELLOWORLD"
 echo "[info]"
 
-cd ../samples/java/helloworld
-$PLAY "$@" clean test
-cd $CURRENT
+cd $FRAMEWORK_HOME/../samples/java/helloworld && $PLAY "$@" clean test
 
 echo "[info]"
 echo "[info] ---- TESTING JAVA/COMPUTER-DATABASE"
 echo "[info]"
 
-cd ../samples/java/computer-database
-$PLAY "$@" clean test
-cd $CURRENT
+cd $FRAMEWORK_HOME/../samples/java/computer-database && $PLAY "$@" clean test
 
 echo "[info]"
 echo "[info] ---- TESTING JAVA/COMPUTER-DATABASE-JPA"
 echo "[info]"
 
-cd ../samples/java/computer-database-jpa
-$PLAY "$@" clean test
-cd $CURRENT
+cd $FRAMEWORK_HOME/../samples/java/computer-database-jpa && $PLAY "$@" clean test
 
 echo "[info]"
 echo "[info] ---- TESTING JAVA/COMET-CLOCK"
 echo "[info]"
 
-cd ../samples/java/comet-clock
-$PLAY "$@" clean test
-cd $CURRENT
+cd $FRAMEWORK_HOME/../samples/java/comet-clock && $PLAY "$@" clean test
 
 echo "[info]"
 echo "[info] ---- TESTING JAVA/WEBSOCKET-CHAT"
 echo "[info]"
 
-cd ../samples/java/websocket-chat
-$PLAY "$@" clean test
-cd $CURRENT
+cd $FRAMEWORK_HOME/../samples/java/websocket-chat && $PLAY "$@" clean test
 
 echo "[info]"
 echo "[info] ---- TESTING JAVA/ZENTASK"
 echo "[info]"
 
-cd ../samples/java/zentasks
-$PLAY "$@" clean test
-cd $CURRENT
+cd $FRAMEWORK_HOME/../samples/java/zentasks && $PLAY "$@" clean test
 
 echo "[info]"
 echo "[info] ---- TESTING SCALA/HELLOWORLD"
 echo "[info]"
 
-cd ../samples/scala/helloworld
-$PLAY "$@" clean test
-cd $CURRENT
+cd $FRAMEWORK_HOME/../samples/scala/helloworld && $PLAY "$@" clean test
 
 echo "[info]"
 echo "[info] ---- TESTING SCALA/COMPUTER-DATABASE"
 echo "[info]"
 
-cd ../samples/scala/computer-database
-$PLAY "$@" clean test
-cd $CURRENT
+cd $FRAMEWORK_HOME/../samples/scala/computer-database && $PLAY "$@" clean test
 
 echo "[info]"
 echo "[info] ---- TESTING SCALA/COMET-CLOCK"
 echo "[info]"
 
-cd ../samples/scala/comet-clock
-$PLAY "$@" clean test
-cd $CURRENT
+cd $FRAMEWORK_HOME/../samples/scala/comet-clock && $PLAY "$@" clean test
 
 echo "[info]"
 echo "[info] ---- TESTING SCALA/WEBSOCKET-CHAT"
 echo "[info]"
 
-cd ../samples/scala/websocket-chat
-$PLAY "$@" clean test
-cd $CURRENT
+cd $FRAMEWORK_HOME/../samples/scala/websocket-chat && $PLAY "$@" clean test
 
 echo "[info]"
 echo "[info] ---- TESTING SCALA/ZENTASK"
 echo "[info]"
 
-cd ../samples/scala/zentasks
-$PLAY "$@" clean test
-cd $CURRENT
+cd $FRAMEWORK_HOME/../samples/scala/zentasks && $PLAY "$@" clean test
 
 echo "[info]"
 echo "[info] ---- TESTING SCALA/PI-CALCULATOR"
 echo "[info]"
 
-cd ../samples/workinprogress/pi-calculator
-$PLAY "$@" clean test
-cd $CURRENT
+cd $FRAMEWORK_HOME/../samples/workinprogress/pi-calculator && $PLAY "$@" clean test
 
 echo
 echo "[info]"
 echo "[info] ALL TESTS PASSED"
 echo "[info]"
+
+cd $CURRENT
+
