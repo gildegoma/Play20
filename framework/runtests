@@ -4,10 +4,11 @@ echo "[info]"
 
 set -e
 export CURRENT=`pwd`
-export SCRIPT=`dirname $0`
+export FRAMEWORK_PATH=`pwd`/`dirname $0`
 
-cd $SCRIPT
-export PLAY=`pwd`/../play
+cd $FRAMEWORK_PATH
+
+export PLAY=$FRAMEWORK_PATH/../play
 
 ./build "$@" publish-local
 
@@ -19,25 +20,23 @@ echo "[info]"
 
 rm -rf ./logs
 
-cd ./test/integrationtest
+cd $FRAMEWORK_PATH/test/integrationtest
 
 echo "[info]"
 echo "[info] ---- RUNNING INTEGRATION TEST"
 echo "[info]"
 
 $PLAY "$@" clean-all test
-cd $CURRENT
 
-cd ./test/integrationtest-java
+cd $FRAMEWORK_PATH/test/integrationtest-java
 
 echo "[info]"
 echo "[info] ---- RUNNING JAVA INTEGRATION TEST"
 echo "[info]"
 
 $PLAY "$@" clean-all test
-cd $CURRENT
 
-cd ./test/integrationtest-scala
+cd $FRAMEWORK_PATH/test/integrationtest-scala
 
 echo "[info]"
 echo "[info] ---- RUNNING SCALA INTEGRATION TEST"
@@ -45,13 +44,11 @@ echo "[info]"
 
 $PLAY "$@" clean-all test
 
-cd $CURRENT
-
 echo "[info]"
 echo "[info] ---- TESTING SAMPLE APPLICATIONS"
 echo "[info]"
 
-x=`find ../samples -name app`
+x=`find $FRAMEWORK_PATH/../samples -name app`
 for i in $(echo $x | tr ";" "\n")
 do
   echo "[info]"
@@ -59,9 +56,11 @@ do
   echo "[info]"
   cd ${i/app/}
   $PLAY "$@" clean-all test
-  cd $CURRENT
 done
 
 echo "[info]"
 echo "[info] ALL TESTS PASSED"
 echo "[info]"
+
+cd $CURRENT
+
